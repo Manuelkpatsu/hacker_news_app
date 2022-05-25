@@ -38,11 +38,13 @@ abstract class _HackerNewsStore with Store {
   void openUrl(String? url) async {
     Uri uri = Uri.parse(url ?? '');
 
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      debugPrint('Could not open $url');
-    }
+    canLaunchUrl(uri).then((bool result) {
+      if (result == true) {
+        launchUrl(uri);
+      } else {
+        debugPrint('Could not open $url');
+      }
+    });
   }
 
   Future refresh(FeedType type) =>
